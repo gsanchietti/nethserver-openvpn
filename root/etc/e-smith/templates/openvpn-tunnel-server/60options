@@ -8,6 +8,7 @@
     my $compression = $server->prop('Compression') || 'disabled';
     my $protocol = $server->prop('Protocol') || 'udp';
     my $topology = $server->prop('Topology') || 'subnet';
+    my $duplicatecn = $server->prop('DuplicateCn') || 'disabled';
     if ($digest ne '') {
         $OUT .= "auth $digest\n";
     }
@@ -25,7 +26,9 @@
     if ($topology eq 'subnet') {
         $OUT .= "client-config-dir ccd\n";
     }
-
+    if ($duplicatecn eq 'enabled' && $topology eq 'subnet') {
+        $OUT .= "duplicate-cn\n";
+    }
 }
 keepalive 10 60
 ping-timer-rem
